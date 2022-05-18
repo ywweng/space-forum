@@ -1,0 +1,144 @@
+<script setup>
+  import { ref } from 'vue'
+
+  const isDarkMode = ref(false)
+  function toggleDarkLight() {
+    document.body.classList.toggle('dark-mode')
+    isDarkMode.value = !isDarkMode.value
+    return {
+      isDarkMode
+    }
+  }
+</script>
+
+<template>
+  <div class="d-flex flex-md-row-reverse" id="container">
+    <div class="container-sm">
+      <router-view></router-view>
+    </div>
+    <ul class="nav nav-pills nav-fill justify-content-around">
+      <li class="nav-item">
+        <router-link
+          class="nav-link"
+          :class="{ active: $route.path === '/' }"
+          aria-current="page"
+          to="/"
+          ><ion-icon name="planet"></ion-icon>
+          <span class="nav-text">所有貼文</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link class="nav-link" to="/space"
+          ><ion-icon name="create-outline"></ion-icon
+          ><span class="nav-text">撰寫貼文</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link"
+          :class="{ active: $route.path === '/profile' }"
+          to="/profile"
+          ><ion-icon name="person-outline"></ion-icon
+          ><span class="nav-text">個人資料</span></router-link
+        >
+      </li>
+      <li class="nav-item" @click="toggleDarkLight">
+        <a class="nav-link" v-if="isDarkMode"
+          ><ion-icon name="sunny-outline"></ion-icon
+          ><span class="nav-text">Light Mode</span></a
+        >
+        <a class="nav-link" v-else
+          ><ion-icon name="moon-outline"></ion-icon
+          ><span class="nav-text">Dark Mode</span></a
+        >
+      </li>
+    </ul>
+  </div>
+</template>
+
+<style lang="scss">
+  @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz@6..96&family=Fira+Code:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Nova+Mono&display=swap');
+  @import 'bootstrap/scss/bootstrap';
+  @import './assets/css/all.scss';
+
+  #app {
+    font-family: 'Noto Sans TC', 'Fira Code', 'Nova Mono', monospace, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100vh;
+    width: 100%;
+    overflow-y: scroll;
+    background: var(--bg-img);
+    background-size: cover;
+    background-position: center;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background: var(--nav-bg-color);
+    .nav-item {
+      .nav-link {
+        color: var(--text-color);
+        background: inherit;
+        ion-icon,
+        .nav-text {
+          padding-right: 6px;
+          padding-bottom: 6px;
+        }
+        .nav-text {
+          display: none;
+        }
+      }
+      .nav-link.active {
+        background: inherit;
+        ion-icon,
+        .nav-text {
+          color: var(--btn-active-color);
+          padding-right: 6px;
+          padding-bottom: 6px;
+          border-bottom: 1px solid var(--btn-active-color);
+        }
+      }
+    }
+    ion-icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    #container {
+      max-width: 768px;
+      margin: 0 auto;
+    }
+    .container-sm {
+      max-height: 100vh;
+      overflow-y: scroll;
+    }
+    .nav {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 25%;
+      height: max-content;
+      margin-top: 5rem;
+      margin-left: auto;
+      background: var(--nav-bg-color);
+      .nav-item {
+        .nav-link {
+          display: flex;
+          .nav-text {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+</style>
