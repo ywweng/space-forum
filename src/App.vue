@@ -28,7 +28,10 @@
         >
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" to="/space"
+        <router-link
+          class="nav-link"
+          to="/post"
+          :class="{ active: $route.path === '/post' }"
           ><ion-icon name="create-outline"></ion-icon
           ><span class="nav-text">撰寫貼文</span></router-link
         >
