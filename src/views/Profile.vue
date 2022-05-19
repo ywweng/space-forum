@@ -57,18 +57,11 @@
   #profile {
     padding-bottom: 3rem;
   }
-  .form-floating {
+
+  .form-check-input {
     color: var(--text-color);
   }
-  .form-control {
-    @extend %glassBg;
-    border: none;
-    &:focus,
-    &:hover,
-    &:read-only {
-      background: inherit;
-    }
-  }
+
   .btn-save {
     background: var(--btn-color);
     border-radius: 30px;

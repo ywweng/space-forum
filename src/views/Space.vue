@@ -26,7 +26,7 @@
           />
 
           <span class="nickname fs-4">Nick</span>
-          <span class="id text-muted">#2</span>
+          <span class="id">#2</span>
         </div>
         <div class="datetime">
           <span class="justify-content-center">2022-1-23 10:15</span>
@@ -53,6 +53,21 @@
         </div>
       </div>
     </div>
+    <form class="reply d-flex align-items-center p-2">
+      <div class="info">
+        <span class="nickname fs-5">Nick</span>
+        <span class="id">#2</span>
+      </div>
+      <textarea
+        type="text"
+        class="reply-text mx-2 w-100"
+        placeholder="留言..."
+        maxlength="100"
+      />
+      <button type="submit" class="btn">
+        <ion-icon name="send-outline"></ion-icon>
+      </button>
+    </form>
     <Comments v-for="index in 10" />
   </div>
 </template>
@@ -66,6 +81,14 @@
     .action {
       border: none;
       background: inherit;
+    }
+  }
+  .reply {
+    @extend %glassBg;
+    .reply-text {
+      background: none;
+      border: none;
+      outline: none;
     }
   }
 </style>

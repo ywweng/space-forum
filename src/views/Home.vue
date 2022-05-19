@@ -18,7 +18,7 @@
           type="search"
           name="search"
           class="form-control search-bar"
-          placeholder="Search..."
+          placeholder="搜尋貼文"
         />
       </form>
     </div>
@@ -41,13 +41,13 @@
       calc(100% - 15px) center;
     &::placeholder {
       visibility: hidden;
-      
     }
     &:focus {
       width: 100%;
       cursor: text;
       &::placeholder {
         visibility: visible;
+        color: #ccc;
       }
     }
   }

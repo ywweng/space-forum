@@ -12,7 +12,7 @@ export default defineConfig({
     // 全域css
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "@/assets/css/globalVariable.scss";'
+        additionalData: '@import "@/assets/css/style.scss";'
       }
     }
   }

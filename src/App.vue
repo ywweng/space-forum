@@ -62,7 +62,6 @@
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz@6..96&family=Fira+Code:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&family=Nova+Mono&display=swap');
   @import 'bootstrap/scss/bootstrap';
-  @import './assets/css/all.scss';
 
   #app {
     font-family: 'Noto Sans TC', 'Fira Code', 'Nova Mono', monospace, sans-serif;

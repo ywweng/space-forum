@@ -5,7 +5,7 @@ body {
 body {
   --bg-img: url('https://images.unsplash.com/photo-1508615070457-7baeba4003ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
   --bg-color: #fefefe;
-  --nav-bg-color: #ffffffb3;
+  --nav-bg-color: #fffffff2;
   --text-color: #272343;
   --btn-color: #ffab6f;
   --btn-active-color: #00adb5;
@@ -16,7 +16,7 @@ body.dark-mode {
     url('https://images.unsplash.com/photo-1508615070457-7baeba4003ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80')
     no-repeat center center;
   --bg-color: #272343;
-  --nav-bg-color: #1a1a1abf;
+  --nav-bg-color: #1a1a1af2;
   --text-color: #fefefe;
   --btn-active-color: #00e4f0;
   #app {
@@ -43,7 +43,7 @@ body.dark-mode {
   color: var(--text-color);
   &:hover,
   &:focus {
-    border: 1px solid #fff;
+    outline: 1px solid #fff;
   }
 }
 
@@ -52,6 +52,20 @@ ion-icon {
   color: var(--text-color);
 }
 
-input::placeholder {
+.form-floating {
   color: var(--text-color);
+}
+
+.form-control {
+  @extend %glassBg;
+  border: none;
+  color: var(--text-color);
+  &:focus,
+  &:hover,
+  &:read-only {
+    background: inherit;
+  }
+  &::placeholder {
+    color: var(--text-color);
+  }
 }

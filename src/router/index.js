@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
-import Card from '@/views/Card.vue'
+import Space from '@/views/Space.vue'
 import Post from '@/views/Post.vue'
 import Profile from '@/views/Profile.vue'
 
@@ -10,8 +10,8 @@ const routes = [
     component: Home
   },
   {
-    path: '/space',
-    component: Card
+    path: '/space/:id',
+    component: Space
   },
   {
     path: '/post',

@@ -35,17 +35,9 @@
   #post {
     padding-bottom: 3rem;
   }
-  .form-floating {
-    color: var(--text-color);
-  }
-  .form-control {
-    @extend %glassBg;
-    border: none;
-    &:focus,
-    &:hover {
-      background: inherit;
-    }
-  }
+
+ 
+
   .btn-post {
     background: var(--btn-color);
     border-radius: 30px;

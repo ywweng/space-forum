@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="space d-flex flex-column my-3 p-1">
+  <div class="space d-flex flex-column my-3 p-1" @click="$router.push('/space/1')">
     <div
       class="space-header d-flex justify-content-between align-items-center p-3"
     >

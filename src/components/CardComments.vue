@@ -4,13 +4,9 @@
       class="comment-header d-flex justify-content-between align-items-center my-1"
     >
       <div class="info d-flex my-auto">
-        <img
-          src="/female_avatar.png"
-          class="avatar me-2 rounded-circle"
-        />
-
+        <img src="/female_avatar.svg" class="avatar me-2 rounded-circle" />
         <span class="nickname fs-4">Abbie</span>
-        <span class="id text-muted">#1</span>
+        <span class="id">#1</span>
       </div>
       <div class="datetime">
         <span class="justify-content-center">2022-1-23 10:15</span>
@@ -24,7 +20,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .comment {
     @extend %glassBg;
   }
