@@ -29,8 +29,17 @@ export default {
   getSpace(id) {
     return apiHelper.get(`${base}/posts?id=${id}`)
   },
+  postSpace(data) {
+    return apiHelper.post(`${base}/posts`, data)
+  },
+  putSpace(data) {
+    return apiHelper.put(`${base}/posts/${data.id}`, data)
+  },
   getComments(id) {
     return apiHelper.get(`${base}/comments?postId=${id}&_sort=date&_order=desc`)
+  },
+  postComment(data) {
+    return apiHelper.post(`${base}/comments`, data)
   },
   getSearchPosts(value) {
     return apiHelper.get(

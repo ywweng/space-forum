@@ -1,5 +1,5 @@
 <script>
-  import { ref, onMounted } from 'vue'
+  import { onMounted } from 'vue'
   import api from '@/utils/api'
   import { Toast } from '@/utils/mixin'
   import { storeToRefs } from 'pinia'
@@ -8,7 +8,7 @@
   export default {
     setup() {
       const store = mainStore()
-      const { user, isRegister } = storeToRefs(mainStore())
+      const { user, isRegister } = storeToRefs(store)
 
       const getUser = async () => {
         const userId = JSON.parse(localStorage.getItem('userId'))
@@ -72,7 +72,7 @@
         <label for="floatingId">ID</label>
       </div>
       <div class="alert alert-warning" role="alert" v-else>
-        請先填入 Nickname 及 Gender
+        請填入 Nickname 及 Gender 。
       </div>
       <div class="form-floating mb-3">
         <input

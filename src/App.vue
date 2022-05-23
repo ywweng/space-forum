@@ -45,7 +45,7 @@
           to="/post"
           :class="{ active: $route.path === '/post' }"
           ><ion-icon name="create-outline"></ion-icon
-          ><span class="nav-text">撰寫貼文</span></router-link
+          ><span class="nav-text">發佈文章</span></router-link
         >
       </li>
       <li class="nav-item">

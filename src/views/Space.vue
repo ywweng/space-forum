@@ -1,5 +1,5 @@
 <script>
-  import Comments from '@/components/CardComments.vue'
+  import Comments from '@/components/Comments.vue'
   import { ref } from 'vue'
   import { useRoute } from 'vue-router'
   import api from '@/utils/api'
@@ -9,7 +9,8 @@
     components: {
       Comments
     },
-    setup() {
+    emits: ['afterReply'],
+    setup(props, { emit }) {
       const route = useRoute()
       const spaceId = route.params.id
       const space = ref({ user: { avatar: '' } })
@@ -24,11 +25,17 @@
       }
       fetchSpace(spaceId)
 
+      const afterReply = async (payload) => {
+        space.value.replies = payload
+        const { data } = await api.putSpace(space.value)
+      }
+
       return {
         isLoading,
         setAvatar,
         fromNow,
-        space
+        space,
+        afterReply
       }
     }
   }
@@ -63,9 +70,7 @@
           <span class="id">#{{ space.user.id }}</span>
         </div>
         <div class="datetime">
-          <span class="justify-content-center">{{
-            fromNow(space.date)
-          }}</span>
+          <span class="justify-content-center">{{ fromNow(space.date) }}</span>
         </div>
       </div>
       <div class="space-body px-3">
@@ -77,34 +82,13 @@
       <div class="space-footer d-flex justify-content-around py-1">
         <div class="d-flex align-center">
           <button type="button" class="pt-2 action">
-            <ion-icon name="heart-outline"></ion-icon>
-          </button>
-          <span class="m-2 like-count">{{ space.likes }}</span>
-        </div>
-        <div class="d-flex align-center">
-          <button type="button" class="pt-2 action">
             <ion-icon name="chatbubbles-outline"></ion-icon>
           </button>
-          <span class="m-2 comment-count">{{ space.replies }}</span>
+          <span class="m-2 comment-count">{{ space.replies || 0 }}</span>
         </div>
       </div>
     </div>
-    <form class="reply d-flex align-items-center p-2">
-      <div class="info">
-        <span class="nickname fs-5">Nick</span>
-        <span class="id">#2</span>
-      </div>
-      <textarea
-        type="text"
-        class="reply-text mx-2 w-100"
-        placeholder="留言..."
-        maxlength="100"
-      />
-      <button type="submit" class="btn">
-        <ion-icon name="send-outline"></ion-icon>
-      </button>
-    </form>
-    <Comments />
+    <Comments :replies="space.replies" @after-reply="afterReply" />
   </div>
 </template>
 
@@ -117,14 +101,6 @@
     .action {
       border: none;
       background: inherit;
-    }
-  }
-  .reply {
-    @extend %glassBg;
-    .reply-text {
-      background: none;
-      border: none;
-      outline: none;
     }
   }
 </style>

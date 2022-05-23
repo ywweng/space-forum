@@ -108,15 +108,9 @@
     <div class="space-footer d-flex justify-content-around py-1">
       <div class="d-flex align-center">
         <button type="button" class="pt-2 action">
-          <ion-icon name="heart-outline"></ion-icon>
-        </button>
-        <span class="m-2 like-count">{{ post.likes }}</span>
-      </div>
-      <div class="d-flex align-center">
-        <button type="button" class="pt-2 action">
           <ion-icon name="chatbubbles-outline"></ion-icon>
         </button>
-        <span class="m-2 reply-count">{{ post.replies }}</span>
+        <span class="m-2 reply-count">{{ post.replies || 0 }}</span>
       </div>
     </div>
   </div>

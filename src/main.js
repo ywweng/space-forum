@@ -9,11 +9,8 @@ import 'bootstrap'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-import dayjs from 'dayjs'
-
 createApp(App)
   .use(router)
   .use(VueAxios, axios)
-  .use(dayjs)
   .use(createPinia())
   .mount('#app')
