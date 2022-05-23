@@ -1,3 +1,3 @@
 <template>
-    <div class="text-center py-auto"><h1>Not Found !!</h1></div>
+    <div class="text-center mt-5" style="color:var(--text-color);"><h1>Not Found !!</h1></div>
 </template>

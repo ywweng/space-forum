@@ -14,7 +14,9 @@ export const fromNow = (date) => {
 }
 
 export const setAvatar = (gender) => {
-  return gender === 'male' ? '/male_avatar.svg' : '/female_avatar.svg'
+  return gender === 'male'
+    ? './male_avatar.svg'
+    : './female_avatar.svg'
 }
 
 export const Toast = Swal.mixin({
