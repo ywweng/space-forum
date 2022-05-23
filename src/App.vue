@@ -1,14 +1,26 @@
 <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
 
   const isDarkMode = ref(false)
-  function toggleDarkLight() {
+  const toggleDarkLight = () => {
     document.body.classList.toggle('dark-mode')
     isDarkMode.value = !isDarkMode.value
+    isDarkMode.value
+      ? localStorage.setItem('dark-theme', JSON.stringify(true))
+      : localStorage.setItem('dark-theme', JSON.stringify(false))
+
     return {
       isDarkMode
     }
   }
+
+  const setMode = () => {
+    isDarkMode.value = JSON.parse(localStorage.getItem('dark-theme'))
+    isDarkMode.value ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode')
+  }
+  onMounted(() => {
+    setMode()
+  })
 </script>
 
 <template>
@@ -24,7 +36,7 @@
           aria-current="page"
           to="/"
           ><ion-icon name="planet"></ion-icon>
-          <span class="nav-text">所有貼文</span></router-link
+          <span class="nav-text">首頁</span></router-link
         >
       </li>
       <li class="nav-item">

@@ -1,13 +1,48 @@
 <script>
   import Comments from '@/components/CardComments.vue'
+  import { ref } from 'vue'
+  import { useRoute } from 'vue-router'
+  import api from '@/utils/api'
+  import { fromNow, setAvatar } from '@/utils/mixin'
+
   export default {
     components: {
       Comments
+    },
+    setup() {
+      const route = useRoute()
+      const spaceId = route.params.id
+      const space = ref({ user: { avatar: '' } })
+      const isLoading = ref(true)
+
+      const fetchSpace = async (id) => {
+        try {
+          const { data } = await api.getSpace(id)
+          space.value = { ...data[0] }
+          isLoading.value = false
+        } catch (error) {}
+      }
+      fetchSpace(spaceId)
+
+      return {
+        isLoading,
+        setAvatar,
+        fromNow,
+        space
+      }
     }
   }
 </script>
 
 <template>
+  <div
+    class="d-flex justify-content-center align-items-center vh-100"
+    v-if="isLoading"
+  >
+    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
   <div id="card">
     <div class="d-flex align-items-center pt-4">
       <router-link to="/"
@@ -21,21 +56,22 @@
       >
         <div class="info d-flex my-auto">
           <img
-            src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/4f/4f6464cfec3bc282717611e9f936c09c5b17572d_full.jpg"
+            :src="setAvatar(space.user.gender)"
             class="avatar me-3 rounded-circle"
           />
-
-          <span class="nickname fs-4">Nick</span>
-          <span class="id">#2</span>
+          <span class="nickname fs-4">{{ space.user.name }}</span>
+          <span class="id">#{{ space.user.id }}</span>
         </div>
         <div class="datetime">
-          <span class="justify-content-center">2022-1-23 10:15</span>
+          <span class="justify-content-center">{{
+            fromNow(space.date)
+          }}</span>
         </div>
       </div>
       <div class="space-body px-3">
-        <h5 class="title fs-5">不想好了過幾現在嗚先</h5>
+        <h5 class="title fs-5">{{ space.title }}</h5>
         <span class="content">
-          網路上面都，放一起看沒有人沒有都已⋯要去時候就。眼神抱竟然是充滿要還是：死亡了月看著⋯朋友但是這友的殺人，的確有去願開始了管是說差不。一時候想吃用自己，來就知道真的這麼大狀不太會，派女兒溫的頭？真康他可能沒受喜歡也是因實在太，還有，麼感覺以直接不介意，想質出現的⋯之哈哈哈時間的，旅人們也是這然後出現蓋。貼說說獲得是想要的小，不是有會不所以好韓自然，大家可廣告喜歡在才了大是不會，的問是人所以沒以跟變成跟風，我的戲好想角結弦，邊心把我真的我不怎麼辦。
+          {{ space.content }}
         </span>
       </div>
       <div class="space-footer d-flex justify-content-around py-1">
@@ -43,13 +79,13 @@
           <button type="button" class="pt-2 action">
             <ion-icon name="heart-outline"></ion-icon>
           </button>
-          <span class="m-2 like-count">1100</span>
+          <span class="m-2 like-count">{{ space.likes }}</span>
         </div>
         <div class="d-flex align-center">
           <button type="button" class="pt-2 action">
             <ion-icon name="chatbubbles-outline"></ion-icon>
           </button>
-          <span class="m-2 comment-count">10</span>
+          <span class="m-2 comment-count">{{ space.replies }}</span>
         </div>
       </div>
     </div>
@@ -68,7 +104,7 @@
         <ion-icon name="send-outline"></ion-icon>
       </button>
     </form>
-    <Comments v-for="index in 10" />
+    <Comments />
   </div>
 </template>
 

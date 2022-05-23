@@ -1,20 +1,56 @@
+<script>
+  import { useRoute } from 'vue-router'
+  import { ref } from 'vue'
+  import api from '@/utils/api'
+  import { fromNow, setAvatar } from '@/utils/mixin'
+
+  export default {
+    setup() {
+      const route = useRoute()
+      const spaceId = route.params.id
+      const comments = ref([])
+
+      const fetchComments = async (id) => {
+        try {
+          const { data } = await api.getComments(id)
+          comments.value = data
+        } catch (error) {}
+      }
+      fetchComments(spaceId)
+
+      return {
+        fromNow,
+        setAvatar,
+        comments
+      }
+    }
+  }
+</script>
+
 <template>
-  <div class="comment d-flex flex-column p-3 my-2">
+  <div
+    class="comment d-flex flex-column p-3 my-2"
+    v-for="comment in comments"
+    :key="comment.id"
+  >
     <div
       class="comment-header d-flex justify-content-between align-items-center my-1"
     >
       <div class="info d-flex my-auto">
-        <img src="/female_avatar.svg" class="avatar me-2 rounded-circle" />
-        <span class="nickname fs-4">Abbie</span>
-        <span class="id">#1</span>
+        <img
+          :src="setAvatar(comment.user.avatar)"
+          class="avatar me-2 rounded-circle"
+        />
+        <span class="nickname fs-4">{{ comment.user.name }}</span>
+        <span class="id">#{{ comment.user.id }}</span>
       </div>
       <div class="datetime">
-        <span class="justify-content-center">2022-1-23 10:15</span>
+        <span class="justify-content-center">{{ fromNow(comment.date) }}</span>
       </div>
     </div>
     <div class="comment-body ps-3 ms-4">
       <span class="content">
-        玻璃奶茶⋯他們還昨天其實：可們一起人們別謝謝，點的話可，了也故事，品的都是。原本謝的時望不要。
+        {{ comment.comment }}
       </span>
     </div>
   </div>

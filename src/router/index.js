@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
-import Space from '@/views/Space.vue'
 import Post from '@/views/Post.vue'
 import Profile from '@/views/Profile.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const routes = [
   {
@@ -11,7 +11,7 @@ const routes = [
   },
   {
     path: '/space/:id',
-    component: Space
+    component: () => import('@/views/Space.vue')
   },
   {
     path: '/post',
@@ -20,6 +20,10 @@ const routes = [
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: NotFound
   }
 ]
 
