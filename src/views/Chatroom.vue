@@ -1,6 +1,6 @@
 <script>
   import { io } from 'socket.io-client'
-  import { ref, onUnmounted, onMounted } from 'vue'
+  import { ref, onUnmounted } from 'vue'
   import { timeFormat } from '@/utils/mixin'
   import { storeToRefs } from 'pinia'
   import { mainStore } from '@/store/index'
@@ -14,17 +14,29 @@
       const allUsers = ref([])
       const holder = ref('')
       holder.value = isRegister.value ? '請輸入...' : '請至個人資料填寫名稱'
+
       const getNewUser = () => {
         socket.emit('online', user.value)
         Toast.fire({ title: `${user.value.name}#${user.value.id} 加入聊天` })
-        socket.on('allUsers', (users) => {
-          allUsers.value = users
+      }
+      const scrollToEnd = () => {
+        let ele = document.querySelector('.dialogue')
+        ele.scroll({ top: ele.scrollHeight + 200, behavior: 'smooth' })
+      }
+      const getMessage = () => {
+        socket.on('newMessage', (data) => {
+          allMessage.value.push(data)
+          scrollToEnd()
         })
       }
       socket.on('connect', () => {
         console.log('connect')
+        socket.on('allUsers', (users) => {
+          allUsers.value = users
+        })
         if (isRegister.value) {
           getNewUser()
+          getMessage()
         } else {
           Toast.fire({ title: '尚未填寫名稱，無法加入聊天', icon: 'warning' })
         }
@@ -48,21 +60,6 @@
           })
         }
       }
-      const scrollToEnd = () => {
-        let ele = document.querySelector('.dialogue')
-        ele.scroll({ top: ele.scrollHeight + 200, behavior: 'smooth' })
-      }
-      const getMessage = () => {
-        socket.on('newMessage', (data) => {
-          allMessage.value.push(data)
-          scrollToEnd()
-        })
-      }
-
-      onMounted(() => {
-        getNewUser()
-        getMessage()
-      })
 
       onUnmounted(() => {
         socket.on('disconnect', () => {
@@ -145,7 +142,7 @@
 
 <style lang="scss" scoped>
   #chatroom {
-    height: calc(100vh - 3rem);
+    height: calc(100vh - 4rem);
   }
   .dropdown {
     color: var(--text-color);

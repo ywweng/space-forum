@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import api from '@/utils/api'
 
 export const mainStore = defineStore('main', {
   state: () => {
@@ -17,7 +18,7 @@ export const mainStore = defineStore('main', {
       const userId = JSON.parse(localStorage.getItem('userId'))
       if (userId) {
         const { data } = await api.getUser(userId)
-        setUser(...data)
+        this.setUser(...data)
       }
     }
   }

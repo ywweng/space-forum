@@ -53,7 +53,7 @@
 
 <style lang="scss" scoped>
   .article {
-    padding-bottom: 3rem;
+    padding-bottom: 4rem;
   }
   input.search-bar {
     width: 50px;

@@ -15,6 +15,8 @@
     }
   }
 
+  const store = mainStore()
+
   const setMode = () => {
     isDarkMode.value = JSON.parse(localStorage.getItem('dark-theme'))
     isDarkMode.value
@@ -22,11 +24,9 @@
       : document.body.classList.remove('dark-mode')
   }
 
-  const store = mainStore()
-
   onMounted(() => {
-    store.getUser()
     setMode()
+    store.getUser()
   })
 </script>
 
@@ -97,7 +97,7 @@
     -moz-osx-font-smoothing: grayscale;
     height: 100vh;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: hidden;
     background: var(--bg-img);
     background-size: cover;
     background-position: center;

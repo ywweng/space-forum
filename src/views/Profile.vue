@@ -10,17 +10,6 @@
       const store = mainStore()
       const { user, isRegister } = storeToRefs(store)
 
-      const getUser = async () => {
-        const userId = JSON.parse(localStorage.getItem('userId'))
-        if (userId) {
-          const { data } = await api.getUser(userId)
-          store.setUser(...data)
-        }
-      }
-      onMounted(() => {
-        getUser()
-      })
-
       const register = async () => {
         if (user.value.name === '') {
           Toast.fire({ title: '不可空白', icon: 'warning' })
