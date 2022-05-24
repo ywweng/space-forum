@@ -1,7 +1,45 @@
-# Vue 3 + Vite
+# Space forum
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 專案介紹
 
-## Recommended IDE Setup
+使用 Vue3 打造的簡易論壇，以 JSON server 作為資料庫模擬 API 串接。
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+## 環境需求
+使用者能新增文章
+本機請安裝 Node.js（v14.16） 以順利安裝專案
+
+## 功能介紹
+
+- 使用者能瀏覽所有文章，點擊文章查看所有留言
+- 使用者能在文章下留言
+- 使用者能發佈文章
+- 使用者可以加入、編輯名稱及性別
+- 使用者可以在線聊天
+
+## 安裝專案
+
+1. Clone 專案到本地
+
+```
+git clone https://github.com/ywweng/space-forum-vue.git
+```
+
+2. 進入專案資料夾
+
+```
+cd space-forum-vue
+```
+
+3. 安裝套件
+
+```
+npm install
+```
+
+4. 啟動專案
+
+```
+npm run dev
+```
+
+5. 成功啟動後，請至瀏覽器輸入終端機提供的網址方能瀏覽專案
