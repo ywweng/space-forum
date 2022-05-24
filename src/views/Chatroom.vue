@@ -14,14 +14,17 @@
       const allUsers = ref([])
       const holder = ref('')
       holder.value = isRegister.value ? '請輸入...' : '請至個人資料填寫名稱'
+      const getNewUser = () => {
+        socket.emit('online', user.value)
+        Toast.fire({ title: `${user.value.name}#${user.value.id} 加入聊天` })
+        socket.on('allUsers', (users) => {
+          allUsers.value = users
+        })
+      }
       socket.on('connect', () => {
         console.log('connect')
         if (isRegister.value) {
-          socket.emit('online', user.value)
-          Toast.fire({ title: `${user.value.name}#${user.value.id} 加入聊天` })
-          socket.on('allUsers', (users) => {
-            allUsers.value = users
-          })
+          getNewUser()
         } else {
           Toast.fire({ title: '尚未填寫名稱，無法加入聊天', icon: 'warning' })
         }
@@ -55,7 +58,9 @@
           scrollToEnd()
         })
       }
+
       onMounted(() => {
+        getNewUser()
         getMessage()
       })
 
@@ -73,7 +78,8 @@
         allMessage,
         holder,
         allUsers,
-        isRegister
+        isRegister,
+        user
       }
     }
   }
@@ -103,7 +109,10 @@
     </div>
     <div class="dialogue flex-grow-1 mb-3 p-3 d-flex flex-column">
       <div
-        :class="{ remote: data.user.id !== 1, local: data.user.id === 1 }"
+        :class="{
+          remote: data.user.id !== user.id,
+          local: data.user.id === user.id
+        }"
         v-for="data in allMessage"
       >
         <div class="info">
@@ -136,7 +145,7 @@
 
 <style lang="scss" scoped>
   #chatroom {
-    height: 100vh;
+    height: calc(100vh - 3rem);
   }
   .dropdown {
     color: var(--text-color);
@@ -173,6 +182,9 @@
   }
 
   @media screen and (min-width: 768px) {
+    #chatroom {
+      height: 100vh;
+    }
     .send {
       margin-bottom: 1rem;
     }

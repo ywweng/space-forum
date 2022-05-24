@@ -1,5 +1,6 @@
 <script setup>
   import { ref, onMounted } from 'vue'
+  import { mainStore } from '@/store/index'
 
   const isDarkMode = ref(false)
   const toggleDarkLight = () => {
@@ -20,7 +21,11 @@
       ? document.body.classList.add('dark-mode')
       : document.body.classList.remove('dark-mode')
   }
+
+  const store = mainStore()
+
   onMounted(() => {
+    store.getUser()
     setMode()
   })
 </script>
@@ -102,7 +107,7 @@
     max-height: 100vh;
     overflow-y: scroll;
   }
-  
+
   ::-webkit-scrollbar {
     display: none;
   }

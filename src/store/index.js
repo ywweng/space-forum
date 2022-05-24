@@ -12,6 +12,13 @@ export const mainStore = defineStore('main', {
     setUser(user) {
       this.user = user
       this.isRegister = true
+    },
+    async getUser() {
+      const userId = JSON.parse(localStorage.getItem('userId'))
+      if (userId) {
+        const { data } = await api.getUser(userId)
+        setUser(...data)
+      }
     }
   }
 })
