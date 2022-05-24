@@ -15,31 +15,30 @@
       const holder = ref('')
       holder.value = isRegister.value ? '請輸入...' : '請至個人資料填寫名稱'
 
-      const getNewUser = () => {
-        socket.emit('online', user.value)
-        Toast.fire({ title: `${user.value.name}#${user.value.id} 加入聊天` })
-      }
       const scrollToEnd = () => {
         let ele = document.querySelector('.dialogue')
         ele.scroll({ top: ele.scrollHeight + 200, behavior: 'smooth' })
       }
-      const getMessage = () => {
+
+      socket.on('connect', () => {
+        console.log('connect')
+        if (isRegister.value) {
+          socket.emit('online', user.value)
+        } else {
+          Toast.fire({ title: '尚未填寫名稱，無法加入聊天', icon: 'warning' })
+        }
+        socket.on('newUser', (user) => {
+          allUsers.value.push(user)
+          Toast.fire({ title: `${user.name}#${user.id} 加入聊天` })
+        })
         socket.on('newMessage', (data) => {
           allMessage.value.push(data)
           scrollToEnd()
         })
-      }
-      socket.on('connect', () => {
-        console.log('connect')
-        socket.on('allUsers', (user) => {
-          allUsers.value.push(...user)
+        socket.on('offline', (user) => {
+          allUsers.value = allUsers.value.filter(item => item.id !== user.id)
+          Toast.fire({ title: `${user.name}#${user.id} 離開聊天` })
         })
-        if (isRegister.value) {
-          getNewUser()
-          getMessage()
-        } else {
-          Toast.fire({ title: '尚未填寫名稱，無法加入聊天', icon: 'warning' })
-        }
       })
 
       const message = ref('')

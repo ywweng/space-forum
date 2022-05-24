@@ -11,7 +11,6 @@
     setup() {
       const searchInput = ref('')
       const searchData = ref([])
-      const searchPage = ref(1)
       const getSearch = async (value) => {
         try {
           const { data } = await api.getSearchPosts(searchInput.value)
@@ -23,7 +22,6 @@
       return {
         searchInput,
         searchData,
-
         getSearch
       }
     }
