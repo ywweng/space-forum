@@ -31,8 +31,8 @@
       }
       socket.on('connect', () => {
         console.log('connect')
-        socket.on('allUsers', (users) => {
-          allUsers.value = users
+        socket.on('allUsers', (user) => {
+          allUsers.value.push(...user)
         })
         if (isRegister.value) {
           getNewUser()

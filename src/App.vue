@@ -103,11 +103,6 @@
     background-position: center;
   }
 
-  .container {
-    max-height: 100vh;
-    overflow-y: scroll;
-  }
-
   ::-webkit-scrollbar {
     display: none;
   }

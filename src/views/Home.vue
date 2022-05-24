@@ -52,8 +52,9 @@
 </template>
 
 <style lang="scss" scoped>
-  .article {
-    padding-bottom: 4rem;
+  #home {
+    height: calc(100vh - 4rem);
+    overflow-y: scroll;
   }
   input.search-bar {
     width: 50px;
