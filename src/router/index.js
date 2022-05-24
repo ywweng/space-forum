@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
 import Post from '@/views/Post.vue'
 import Profile from '@/views/Profile.vue'
+import Chatroom from '@/views/Chatroom.vue'
 import NotFound from '@/views/NotFound.vue'
 
 const routes = [
@@ -20,6 +21,10 @@ const routes = [
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    path: '/chatroom',
+    component: Chatroom
   },
   {
     path: '/:pathMatch(.*)*',

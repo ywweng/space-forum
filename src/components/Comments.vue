@@ -2,8 +2,7 @@
   import { useRoute } from 'vue-router'
   import { ref } from 'vue'
   import api from '@/utils/api'
-  import { fromNow, setAvatar } from '@/utils/mixin'
-  import { Toast } from '@/utils/mixin'
+  import { fromNow, setAvatar, Toast } from '@/utils/mixin'
   import { storeToRefs } from 'pinia'
   import { mainStore } from '@/store/index'
 

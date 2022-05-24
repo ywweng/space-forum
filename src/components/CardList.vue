@@ -2,7 +2,6 @@
   import api from '@/utils/api'
   import { fromNow, setAvatar } from '@/utils/mixin'
   import { ref, toRef, watch, onMounted } from 'vue'
-  import { useRouter } from 'vue-router'
 
   export default {
     props: {

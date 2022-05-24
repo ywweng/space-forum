@@ -16,7 +16,9 @@
 
   const setMode = () => {
     isDarkMode.value = JSON.parse(localStorage.getItem('dark-theme'))
-    isDarkMode.value ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode')
+    isDarkMode.value
+      ? document.body.classList.add('dark-mode')
+      : document.body.classList.remove('dark-mode')
   }
   onMounted(() => {
     setMode()
@@ -25,7 +27,7 @@
 
 <template>
   <div class="d-flex flex-md-row-reverse" id="container">
-    <div class="container-sm">
+    <div class="container">
       <router-view></router-view>
     </div>
     <ul class="nav nav-pills nav-fill justify-content-around">
@@ -55,6 +57,15 @@
           to="/profile"
           ><ion-icon name="person-outline"></ion-icon
           ><span class="nav-text">個人資料</span></router-link
+        >
+      </li>
+      <li class="nav-item">
+        <router-link
+          class="nav-link"
+          :class="{ active: $route.path === '/chatroom' }"
+          to="/chatroom"
+          ><ion-icon name="earth"></ion-icon
+          ><span class="nav-text">公開聊天室</span></router-link
         >
       </li>
       <li class="nav-item" @click="toggleDarkLight">
@@ -87,6 +98,11 @@
     background-position: center;
   }
 
+  .container {
+    max-height: 100vh;
+    overflow-y: scroll;
+  }
+  
   ::-webkit-scrollbar {
     display: none;
   }
@@ -132,10 +148,7 @@
       max-width: 768px;
       margin: 0 auto;
     }
-    .container-sm {
-      max-height: 100vh;
-      overflow-y: scroll;
-    }
+
     .nav {
       position: relative;
       display: flex;

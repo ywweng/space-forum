@@ -13,6 +13,10 @@ export const fromNow = (date) => {
     : dayjs(date).fromNow()
 }
 
+export const timeFormat = (date) => {
+  return dayjs(date).format('HH:mm')
+}
+
 export const setAvatar = (gender) => {
   return gender === 'male'
     ? './male_avatar.svg'
