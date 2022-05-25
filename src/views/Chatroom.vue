@@ -1,6 +1,6 @@
 <script>
   import { io } from 'socket.io-client'
-  import { ref, onUnmounted, onUpdated } from 'vue'
+  import { ref, onUnmounted } from 'vue'
   import { timeFormat } from '@/utils/mixin'
   import { storeToRefs } from 'pinia'
   import { mainStore } from '@/store/index'
@@ -67,13 +67,6 @@
         Toast.fire({ title: '抱歉，聊天室暫不開放', icon: 'error' })
         socket.disconnect()
         holder.value = '聊天室暫不開放'
-      })
-
-      onUpdated(() => {
-        if (isRegister.value) {
-          socket.emit('offline', user.value)
-        }
-        socket.disconnect()
       })
 
       onUnmounted(() => {
