@@ -54,6 +54,9 @@
     height: calc(100vh - 4rem);
     overflow-y: scroll;
   }
+  .article {
+    padding-bottom: 3rem;
+  }
   input.search-bar {
     width: 50px;
     border: 1px solid #ccc;
@@ -80,5 +83,8 @@
     #home {
       height: calc(100vh - 1rem);
     }
+    .article {
+    padding-bottom: 0;
+  }
   }
 </style>

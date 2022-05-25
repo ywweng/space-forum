@@ -157,6 +157,7 @@
 <style lang="scss" scoped>
   #chatroom {
     height: calc(100vh - 4rem);
+    padding-bottom: 3rem;
   }
   .dropdown {
     color: var(--text-color);
@@ -192,6 +193,7 @@
   @media screen and (min-width: 768px) {
     #chatroom {
       height: calc(100vh - 1rem);
+      padding-bottom: 0;
     }
   }
 </style>

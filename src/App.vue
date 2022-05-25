@@ -102,6 +102,10 @@
     background-position: center;
   }
 
+  #container {
+    margin-bottom: 3rem;
+  }
+
   ::-webkit-scrollbar {
     display: none;
   }
