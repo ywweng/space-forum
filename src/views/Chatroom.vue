@@ -13,34 +13,13 @@
       const { user, isRegister } = storeToRefs(store)
       const allUsers = ref([])
       const holder = ref('')
-      holder.value = isRegister.value ? '請輸入...' : '請至個人資料填寫名稱'
+      const isConnected = ref(false)
 
-      const scrollToEnd = () => {
-        let ele = document.querySelector('.dialogue')
-        ele.scroll({ top: ele.scrollHeight + 200, behavior: 'smooth' })
+      if (!isConnected.value) {
+        holder.value = '聊天室暫不開放'
+      } else {
+        holder.value = isRegister.value ? '請輸入...' : '請至個人資料填寫名稱'
       }
-
-      socket.on('connect', () => {
-        console.log('connect')
-        if (isRegister.value) {
-          socket.emit('online', user.value)
-        } else {
-          Toast.fire({ title: '尚未填寫名稱，無法加入聊天', icon: 'warning' })
-        }
-        socket.on('newUser', (user) => {
-          Toast.fire({ title: `${user.name}#${user.id} 加入聊天` })
-        })
-        socket.on('allUsers',(users) => {
-          allUsers.value = users
-        })
-        socket.on('newMessage', (data) => {
-          allMessage.value.push(data)
-          scrollToEnd()
-        })
-        socket.on('offline', (user) => {
-          Toast.fire({ title: `${user.name}#${user.id} 離開聊天` })
-        })
-      })
 
       const message = ref('')
       const allMessage = ref([])
@@ -61,6 +40,39 @@
         }
       }
 
+      const scrollToEnd = () => {
+        let ele = document.querySelector('.dialogue')
+        ele.scroll({ top: ele.scrollHeight + 200, behavior: 'smooth' })
+      }
+
+      socket.on('connect', () => {
+        console.log('connect')
+        isConnected.value = true
+        if (isRegister.value) {
+          socket.emit('online', user.value)
+        } else {
+          Toast.fire({ title: '尚未填寫名稱，無法加入聊天', icon: 'warning' })
+        }
+        socket.on('newUser', (user) => {
+          Toast.fire({ title: `${user.name}#${user.id} 加入聊天` })
+        })
+        socket.on('allUsers', (users) => {
+          allUsers.value = users
+        })
+        socket.on('newMessage', (data) => {
+          allMessage.value.push(data)
+          scrollToEnd()
+        })
+        socket.on('offline', (user) => {
+          Toast.fire({ title: `${user.name}#${user.id} 離開聊天` })
+        })
+      })
+
+      socket.on('connect_error', () => {
+        Toast.fire({ title: '抱歉，聊天室暫不開放', icon: 'error' })
+        socket.disconnect()
+      })
+
       onUnmounted(() => {
         socket.emit('offline', user.value)
         socket.disconnect()
@@ -74,6 +86,7 @@
         holder,
         allUsers,
         isRegister,
+        isConnected,
         user
       }
     }
@@ -96,13 +109,18 @@
           <ion-icon name="people"></ion-icon>
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-          <li class="dropdown-item" v-for="user in allUsers">
+          <li
+            class="dropdown-item"
+            v-for="user in allUsers"
+            v-if="allUsers.length"
+          >
             <span>{{ user.name }}#{{ user.id }}</span>
           </li>
+          <li class="dropdown-item" v-else>無人在線</li>
         </ul>
       </div>
     </div>
-    <div class="dialogue flex-grow-1 mb-3 p-3 d-flex flex-column">
+    <div class="dialogue flex-grow-1 p-3 d-flex flex-column">
       <div
         :class="{
           remote: data.user.id !== user.id,
@@ -124,13 +142,13 @@
         class="message w-100 p-2 me-2"
         :placeholder="holder"
         v-model.trim="message"
-        :disabled="!isRegister"
+        :disabled="!isRegister || !isConnected"
       />
       <button
         type="button"
         class="btn"
         @click.prevent="send"
-        :disabled="!isRegister"
+        :disabled="!isRegister || !isConnected"
       >
         <ion-icon name="send-outline"></ion-icon>
       </button>
@@ -139,6 +157,9 @@
 </template>
 
 <style lang="scss" scoped>
+  #app {
+    height: 100%;
+  }
   #chatroom {
     height: calc(100vh - 4rem);
   }

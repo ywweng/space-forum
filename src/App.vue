@@ -97,7 +97,6 @@
     -moz-osx-font-smoothing: grayscale;
     height: 100vh;
     width: 100%;
-    overflow-y: hidden;
     background: var(--bg-img);
     background-size: cover;
     background-position: center;

@@ -18,7 +18,7 @@
           Toast.fire({ title: '不可空白', icon: 'warning' })
           return
         } else {
-           const spaceData = {
+          const spaceData = {
             user: user.value,
             date: new Date(),
             title: title.value,
@@ -47,11 +47,11 @@
 </script>
 
 <template>
-  <div id="post" v-if="isRegister">
+  <div id="post">
     <div class="d-flex align-items-center justify-content-between pt-4">
       <h1 class="logo px-2">Post</h1>
     </div>
-    <form class="d-flex flex-column m-3">
+    <form class="d-flex flex-column m-3" v-if="isRegister">
       <div class="form-floating mb-3">
         <input
           type="text"
@@ -76,14 +76,19 @@
         <label for="floatingContent">Content</label>
         <div class="text-end">{{ content.length }}/500</div>
       </div>
-      <button type="button" class="btn btn-post mb-3" @click.prevent="post" :disabled="isProcessing">
+      <button
+        type="button"
+        class="btn btn-post mb-3"
+        @click.prevent="post"
+        :disabled="isProcessing"
+      >
         Post
       </button>
     </form>
-  </div>
-  <div class="alert alert-warning mt-5 ms-3" role="alert" v-else>
-    <span>填寫名稱才能留言。</span
-    ><router-link to="/profile">點我去填寫</router-link>
+    <div class="alert alert-warning m-3" role="alert" v-else>
+      <span>填寫名稱才能留言。</span
+      ><router-link to="/profile">點我去填寫</router-link>
+    </div>
   </div>
 </template>
 
