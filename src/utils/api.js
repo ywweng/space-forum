@@ -47,7 +47,7 @@ export default {
     )
   },
   getUser(id) {
-    return apiHelper.get(`${base}/users?id=${id}`)
+    return apiHelper.get(`${base}/users/${id}`)
   },
   postUser(user) {
     return apiHelper.post(`${base}/users`, user)

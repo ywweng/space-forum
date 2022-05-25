@@ -1,6 +1,6 @@
 <script>
   import { useRoute } from 'vue-router'
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import api from '@/utils/api'
   import { fromNow, setAvatar, Toast } from '@/utils/mixin'
   import { storeToRefs } from 'pinia'
@@ -12,6 +12,8 @@
       const route = useRoute()
       const spaceId = route.params.id
       const comments = ref([])
+      const store = mainStore()
+      const { user, isRegister } = storeToRefs(store)
 
       const fetchComments = async (id) => {
         try {
@@ -21,9 +23,8 @@
       }
       fetchComments(spaceId)
 
-      const store = mainStore()
-      const { user, isRegister } = storeToRefs(store)
       const comment = ref('')
+      const isProcessing = ref(false)
       const reply = async () => {
         if (comment.value === '') {
           Toast.fire({ title: '不可空白', icon: 'warning' })
@@ -31,10 +32,11 @@
         } else {
           const commentData = {
             postId: spaceId,
-            user: { ...user.value },
+            user: user.value,
             date: new Date(),
             comment: comment.value
           }
+          isProcessing.value = true
           const { data } = await api.postComment(commentData)
           console.log(data, commentData)
           const count = ref(props.replies)
@@ -42,6 +44,7 @@
           comments.value.unshift(commentData)
           Toast.fire({ title: '留言成功', icon: 'success' })
           comment.value = ''
+          isProcessing.value = false
           fetchComments(spaceId)
         }
       }
@@ -53,7 +56,8 @@
         user,
         isRegister,
         comment,
-        reply
+        reply,
+        isProcessing
       }
     }
   }
@@ -73,7 +77,7 @@
         maxlength="100"
         v-model.trim="comment"
       />
-      <button type="button" class="btn" @click="reply">
+      <button type="button" class="btn" @click="reply" :disabled="isProcessing">
         <ion-icon name="send-outline"></ion-icon>
       </button>
     </div>

@@ -18,7 +18,11 @@ export const mainStore = defineStore('main', {
       const userId = JSON.parse(localStorage.getItem('userId'))
       if (userId) {
         const { data } = await api.getUser(userId)
-        this.setUser(...data)
+        if (data === {}) {
+          return
+        } else {
+          this.setUser(data)
+        }
       }
     }
   }

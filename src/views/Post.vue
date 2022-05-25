@@ -11,6 +11,7 @@
       const { user, isRegister } = storeToRefs(store)
       const title = ref('')
       const content = ref('')
+      const isProcessing = ref(false)
 
       const post = async () => {
         if (title.value === '' || content.value === '') {
@@ -24,10 +25,12 @@
             content: content.value,
             likes: 0
           }
+          isProcessing.value = true
           const { data } = await api.postSpace(spaceData)
           Toast.fire({ title: '發佈成功', icon: 'success' })
           title.value = ''
           content.value = ''
+          isProcessing.value = false
         }
       }
 
@@ -36,7 +39,8 @@
         isRegister,
         title,
         content,
-        post
+        post,
+        isProcessing
       }
     }
   }
@@ -72,7 +76,7 @@
         <label for="floatingContent">Content</label>
         <div class="text-end">{{ content.length }}/500</div>
       </div>
-      <button type="button" class="btn btn-post mb-3" @click.prevent="post">
+      <button type="button" class="btn btn-post mb-3" @click.prevent="post" :disabled="isProcessing">
         Post
       </button>
     </form>

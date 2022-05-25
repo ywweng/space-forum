@@ -28,15 +28,16 @@
           Toast.fire({ title: '尚未填寫名稱，無法加入聊天', icon: 'warning' })
         }
         socket.on('newUser', (user) => {
-          allUsers.value.push(user)
           Toast.fire({ title: `${user.name}#${user.id} 加入聊天` })
+        })
+        socket.on('allUsers',(users) => {
+          allUsers.value = users
         })
         socket.on('newMessage', (data) => {
           allMessage.value.push(data)
           scrollToEnd()
         })
         socket.on('offline', (user) => {
-          allUsers.value = allUsers.value.filter(item => item.id !== user.id)
           Toast.fire({ title: `${user.name}#${user.id} 離開聊天` })
         })
       })
@@ -61,10 +62,8 @@
       }
 
       onUnmounted(() => {
-        socket.on('disconnect', () => {
-          console.log('disconnect')
-          socket.emit('offline', user.value)
-        })
+        socket.emit('offline', user.value)
+        socket.disconnect()
       })
 
       return {
@@ -166,9 +165,6 @@
     width: fit-content;
     max-width: 90%;
   }
-  .send {
-    margin-bottom: 4rem;
-  }
   .message {
     @extend %glassBg;
     border: none;
@@ -179,10 +175,7 @@
 
   @media screen and (min-width: 768px) {
     #chatroom {
-      height: 100vh;
-    }
-    .send {
-      margin-bottom: 1rem;
+      height: calc(100vh - 1rem);
     }
   }
 </style>

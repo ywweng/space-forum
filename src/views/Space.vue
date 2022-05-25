@@ -42,14 +42,6 @@
 </script>
 
 <template>
-  <div
-    class="d-flex justify-content-center align-items-center vh-100"
-    v-if="isLoading"
-  >
-    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
   <div id="card">
     <div class="d-flex align-items-center pt-4">
       <router-link to="/"
@@ -57,7 +49,19 @@
       ></router-link>
       <h1 class="logo px-2 mx-auto">Space</h1>
     </div>
-    <div class="space d-flex flex-column my-3 p-1">
+    <div
+      class="d-flex justify-content-center align-items-center vh-100"
+      v-if="isLoading"
+    >
+      <div
+        class="spinner-border"
+        role="status"
+        style="width: 3rem; height: 3rem"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="space d-flex flex-column my-3 p-1" v-else>
       <div
         class="space-header d-flex justify-content-between align-items-center p-3"
       >
@@ -94,13 +98,19 @@
 
 <style lang="scss" scoped>
   #card {
-    padding-bottom: 3rem;
+    height: calc(100vh - 4rem);
+    overflow-y: scroll;
   }
   .space {
     @extend %glassBg;
     .action {
       border: none;
       background: inherit;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    #card {
+      height: calc(100vh - 1rem);
     }
   }
 </style>

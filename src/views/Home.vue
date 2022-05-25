@@ -76,4 +76,9 @@
       }
     }
   }
+  @media screen and (min-width: 768px) {
+    #home {
+      height: calc(100vh - 1rem);
+    }
+  }
 </style>

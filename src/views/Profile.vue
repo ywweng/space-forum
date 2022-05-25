@@ -1,5 +1,5 @@
 <script>
-  import { onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import api from '@/utils/api'
   import { Toast } from '@/utils/mixin'
   import { storeToRefs } from 'pinia'
@@ -10,19 +10,24 @@
       const store = mainStore()
       const { user, isRegister } = storeToRefs(store)
 
+      const isProcessing = ref(false)
+
       const register = async () => {
         if (user.value.name === '') {
           Toast.fire({ title: '不可空白', icon: 'warning' })
           return
         }
+        isProcessing.value = true
         const { data } = await api.postUser(user.value)
         localStorage.setItem('userId', JSON.stringify(data.id))
         Toast.fire({ title: '註冊成功', icon: 'success' })
-        getUser()
+        isProcessing.value = false
+        store.setUser(data)
       }
 
       const editInfo = async () => {
         if (user.value.id === store.user.id) {
+          isProcessing.value = true
           const { response, data } = await api.putUser(user.value)
           if (response.status !== '400') {
             store.setUser(data)
@@ -30,6 +35,7 @@
           } else {
             Toast.fire({ title: '更改失敗', icon: 'error' })
           }
+          isProcessing.value = false
         }
       }
 
@@ -37,7 +43,8 @@
         isRegister,
         user,
         register,
-        editInfo
+        editInfo,
+        isProcessing
       }
     }
   }
@@ -104,11 +111,18 @@
         type="button"
         class="btn btn-save mb-3"
         @click.prevent="editInfo"
+        :disabled="isProcessing"
         v-if="isRegister"
       >
         Save
       </button>
-      <button type="button" class="btn btn-save mb-3" @click.prevent="register" v-else>
+      <button
+        type="button"
+        class="btn btn-save mb-3"
+        @click.prevent="register"
+        :disabled="isProcessing"
+        v-else
+      >
         Register
       </button>
     </form>

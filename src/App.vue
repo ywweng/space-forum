@@ -16,6 +16,7 @@
   }
 
   const store = mainStore()
+  store.getUser()
 
   const setMode = () => {
     isDarkMode.value = JSON.parse(localStorage.getItem('dark-theme'))
@@ -26,7 +27,6 @@
 
   onMounted(() => {
     setMode()
-    store.getUser()
   })
 </script>
 
