@@ -20,13 +20,13 @@
 1. Clone 專案到本地
 
 ```
-git clone https://github.com/ywweng/space-forum-vue.git
+git clone https://github.com/ywweng/space-forum.git
 ```
 
 2. 進入專案資料夾
 
 ```
-cd space-forum-vue
+cd space-forum
 ```
 
 3. 安裝套件
