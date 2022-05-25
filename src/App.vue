@@ -95,7 +95,7 @@
     font-family: 'Noto Sans TC', 'Fira Code', 'Nova Mono', monospace, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    height: 100vh;
+    height: calc(100vh - 3rem);
     width: 100%;
     background: var(--bg-img);
     background-size: cover;
@@ -143,6 +143,10 @@
   }
 
   @media screen and (min-width: 768px) {
+    #app {
+      height: 100vh;
+    }
+
     #container {
       max-width: 768px;
       margin: 0 auto;

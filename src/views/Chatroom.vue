@@ -14,12 +14,7 @@
       const allUsers = ref([])
       const holder = ref('')
       const isConnected = ref(false)
-
-      if (!isConnected.value) {
-        holder.value = '聊天室暫不開放'
-      } else {
-        holder.value = isRegister.value ? '請輸入...' : '請至個人資料填寫名稱'
-      }
+      holder.value = isRegister.value ? '請輸入...' : '請至個人資料填寫名稱'
 
       const message = ref('')
       const allMessage = ref([])
@@ -71,10 +66,13 @@
       socket.on('connect_error', () => {
         Toast.fire({ title: '抱歉，聊天室暫不開放', icon: 'error' })
         socket.disconnect()
+        holder.value = '聊天室暫不開放'
       })
 
       onUnmounted(() => {
-        socket.emit('offline', user.value)
+        if (isRegister.value) {
+          socket.emit('offline', user.value)
+        }
         socket.disconnect()
       })
 
@@ -157,9 +155,6 @@
 </template>
 
 <style lang="scss" scoped>
-  #app {
-    height: 100%;
-  }
   #chatroom {
     height: calc(100vh - 4rem);
   }
