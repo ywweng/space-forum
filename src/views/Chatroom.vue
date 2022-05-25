@@ -8,7 +8,7 @@
 
   export default {
     setup() {
-      const socket = io('https://test-space-socket.herokuapp.com')
+      const socket = io('https://space-socket-test.herokuapp.com')
       const store = mainStore()
       const { user, isRegister } = storeToRefs(store)
       const allUsers = ref([])
