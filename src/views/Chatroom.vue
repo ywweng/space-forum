@@ -40,24 +40,30 @@
         ele.scroll({ top: ele.scrollHeight + 200, behavior: 'smooth' })
       }
 
+      let member = {}
       socket.on('connect', () => {
         console.log('connect')
         isConnected.value = true
         if (isRegister.value) {
-          socket.emit('online', user.value)
+          member = { ...user.value, socketId: socket.id }
+          socket.emit('online', member)
         } else {
           Toast.fire({ title: '尚未填寫名稱，無法加入聊天', icon: 'warning' })
         }
+
         socket.on('newUser', (user) => {
           Toast.fire({ title: `${user.name}#${user.id} 加入聊天` })
         })
+
         socket.on('allUsers', (users) => {
           allUsers.value = users
         })
+
         socket.on('newMessage', (data) => {
           allMessage.value.push(data)
           scrollToEnd()
         })
+
         socket.on('offline', (user) => {
           Toast.fire({ title: `${user.name}#${user.id} 離開聊天` })
         })
@@ -71,7 +77,7 @@
 
       onUnmounted(() => {
         if (isRegister.value) {
-          socket.emit('offline', user.value)
+          socket.emit('offline', member)
         }
         socket.disconnect()
       })
